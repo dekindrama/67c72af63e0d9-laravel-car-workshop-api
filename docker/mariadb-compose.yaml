@@ -1,0 +1,36 @@
+networks:
+  67c72af63e0d9-network:
+    driver: bridge
+
+services:
+  67c72af63e0d9-mariadb:
+    platform: linux/amd64
+    image: docker.io/bitnami/mariadb:11.4
+    environment:
+      MARIADB_DATABASE: 67c72af63e0d9_db
+      MARIADB_USER: 67c72af63e0d9_user
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_PASSWORD: root-secret
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - "./mariadb/data:/bitnami/mariadb/data"
+      - "./mariadb/exports:/bitnami/mariadb/exports"
+      - "./mariadb/imports:/bitnami/mariadb/imports"
+    networks:
+      - 67c72af63e0d9-network
+
+  67c72af63e0d9-phpmyadmin:
+    platform: linux/amd64
+    image: docker.io/bitnami/phpmyadmin:5.2.2
+    environment:
+      DATABASE_HOST: 67c72af63e0d9-mariadb
+      DATABASE_USER: 67c72af63e0d9_user
+      DATABASE_PASSWORD: secret
+      DATABASE_PORT_NUMBER: 3306
+    ports:
+      - "8080:8080"
+    depends_on:
+      - 67c72af63e0d9-mariadb
+    networks:
+      - 67c72af63e0d9-network
