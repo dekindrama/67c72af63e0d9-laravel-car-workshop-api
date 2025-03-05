@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin\Repair\RepairJobController;
 
 use App\Enums\RepairJobStatusEnum;
 use App\Enums\RoleEnum;
+use App\Mail\Admin\Repair\AssignedRepairJobMail;
 use App\Models\Repair;
 use App\Models\RepairJob;
 use App\Models\User;
@@ -43,5 +44,8 @@ class UpdateTest extends TestCase
                      ]
                  ]);
         $this->assertDatabaseHas(RepairJob::class, $request);
+
+        $mailable = new AssignedRepairJobMail($job);
+        $mailable->assertTo($job->mechanic->email);
     }
 }

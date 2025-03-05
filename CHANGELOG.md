@@ -1,3 +1,14 @@
+## [0.7.0] - 05-05-2025
+
+-   add feature admin:
+    -   create invoice repair and send email invoice
+
+## [0.6.0] - 05-05-2025
+
+-   add feature admin:
+    -   send email RepairCompleted on repair update
+    -   send email AssignedJob on update repair job assigned
+
 ## [0.5.0] - 05-05-2025
 
 -   add feature mechanic: RU repair jobs

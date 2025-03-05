@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin\Repair\RepairController;
 
 use App\Enums\RepairStatusEnum;
 use App\Enums\RoleEnum;
+use App\Mail\Admin\Repair\RepairCompletedMail;
 use App\Models\Repair;
 use App\Models\RepairCar;
 use App\Models\User;
@@ -24,7 +25,7 @@ class UpdateTest extends TestCase
         $owner = User::where('role', RoleEnum::CAR_OWNER)->first();
         $repair = Repair::first();
 
-        $updateData = [
+        $request = [
             'id' => $repair->id,
             'owner_id' => $owner->id,
             'status' => RepairStatusEnum::PROGRESS,
@@ -32,7 +33,7 @@ class UpdateTest extends TestCase
             'car_description' => 'Blue hatchback'
         ];
 
-        $response = $this->actingAs($admin)->putJson(route('admin.repair.update', $repair->id), $updateData);
+        $response = $this->actingAs($admin)->putJson(route('admin.repair.update', $repair->id), $request);
 
         $response->assertStatus(Response::HTTP_OK)
                  ->assertJsonStructure([
@@ -51,5 +52,8 @@ class UpdateTest extends TestCase
             'number_plate' => 'B 5678 ABC',
             'description' => 'Blue hatchback'
         ]);
+
+        $mailable = new RepairCompletedMail($repair);
+        $mailable->assertTo($owner->email);
     }
 }

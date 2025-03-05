@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin\Repair\RepairJobController;
 
 use App\Enums\RepairJobStatusEnum;
 use App\Enums\RoleEnum;
+use App\Mail\Admin\Repair\AssignedRepairJobMail;
 use App\Models\Repair;
 use App\Models\RepairJob;
 use App\Models\Service;
@@ -46,5 +47,9 @@ class StoreTest extends TestCase
                          'job' => ['id', 'status']
                      ]
                  ]);
+
+        $job = RepairJob::latest()->first();
+        $mailable = new AssignedRepairJobMail($job);
+        $mailable->assertTo($mechanic->email);
     }
 }

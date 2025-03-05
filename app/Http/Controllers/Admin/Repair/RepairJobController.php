@@ -6,6 +6,7 @@ use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Repair\RepairJobStoreRequest;
 use App\Http\Requests\Admin\Repair\RepairJobUpdateRequest;
+use App\Mail\Admin\Repair\AssignedRepairJobMail;
 use App\Models\Repair;
 use App\Models\RepairJob;
 use App\Models\Service;
@@ -13,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class RepairJobController extends Controller
 {
@@ -66,6 +68,10 @@ class RepairJobController extends Controller
             'status' => $request->status,
         ]);
 
+        if ($request->mechanic_id) {
+            Mail::queue(new AssignedRepairJobMail($storedJob)); //* send email to mechanic
+        }
+
         return response()->json([
             'message' => 'success store repair job',
             'data' => [
@@ -105,6 +111,10 @@ class RepairJobController extends Controller
             'repair_id' => $request->id,
             'status' => $request->status,
         ]);
+
+        if ($request->mechanic_id) {
+            Mail::queue(new AssignedRepairJobMail($job)); //* send email to mechanic
+        }
 
         return response()->json([
             'message' => 'success update repair job',

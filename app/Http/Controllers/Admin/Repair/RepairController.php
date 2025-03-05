@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Admin\Repair;
 
+use App\Enums\RepairStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Repair\RepairStoreRequest;
 use App\Http\Requests\Admin\Repair\RepairUpdateRequest;
 use App\Http\Resources\Admin\Repair\RepairDetailResource;
 use App\Http\Resources\Admin\Repair\RepairListResource;
+use App\Mail\Admin\Repair\RepairCompletedMail;
 use App\Models\Repair;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class RepairController extends Controller
 {
@@ -88,6 +91,10 @@ class RepairController extends Controller
                 'number_plate' => $request->car_number_plate,
                 'description' => $request->car_description,
             ]);
+
+            if ($request->status == RepairStatusEnum::COMPLETED) {
+                Mail::queue(new RepairCompletedMail($repair)); //* send email to owner
+            }
 
             DB::commit();
         } catch (\Throwable $th) {
