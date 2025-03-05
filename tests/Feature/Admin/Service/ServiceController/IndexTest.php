@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\ServiceController;
+namespace Tests\Feature\Admin\Service\ServiceController;
 
 use App\Enums\RoleEnum;
 use App\Models\Service;
@@ -22,16 +22,16 @@ class IndexTest extends TestCase
         $admin = User::where('role', RoleEnum::ADMIN)->first();
         $services = Service::factory(5)->create();
 
-        $response = $this->actingAs($admin)->get(route('service.index'));
+        $response = $this->actingAs($admin)->getJson(route('service.index'));
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-            'data' => [
-                'services',
-            ],
-        ]);
-        $response->assertJsonCount(5, 'data.services');
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'services',
+                ],
+            ])
+            ->assertJsonCount(5, 'data.services');
     }
 
     function test_get_services_wrong_user_role() {
@@ -39,7 +39,7 @@ class IndexTest extends TestCase
 
         $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
 
-        $response = $this->actingAs($mechanic)->get(route('service.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('service.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

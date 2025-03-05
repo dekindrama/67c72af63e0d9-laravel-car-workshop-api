@@ -1,3 +1,14 @@
+## [0.4.0] - 05-05-2025
+
+-   add feature admin: CRUD repairs, CRUD repair jobs
+
+## [0.3.0] - 05-05-2025
+
+-   fixing bug: auto test reset db data
+-   add feature admin: CRD users
+-   update content: readme
+-   refactoring code
+
 ## [0.2.0] - 05-05-2025
 
 -   add feature: login, logout, get logged user

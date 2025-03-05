@@ -22,13 +22,13 @@ class LoginTest extends TestCase
             'password' => 'password'
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-            'data' => [
-                'token',
-            ],
-        ]);
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'token',
+                ],
+            ]);
     }
 
     public function test_login_bad_request(): void

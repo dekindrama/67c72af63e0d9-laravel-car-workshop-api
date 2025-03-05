@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\ServiceController;
+namespace Tests\Feature\Admin\Service\ServiceController;
 
 use App\Enums\RoleEnum;
 use App\Helpers\APIHelper;
@@ -27,15 +27,16 @@ class UpdateTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->put(route('service.update', ['id' => $service->id]), $request);
+        $response = $this->actingAs($admin)->putJson(route('service.update', ['id' => $service->id]), $request);
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-            'data' => [
-                'service',
-            ],
-        ]);
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'service',
+                ],
+            ]);
+        $this->assertDatabaseHas(Service::class, $request);
     }
 
     public function test_update_service_not_found(): void
@@ -48,7 +49,7 @@ class UpdateTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->put(route('service.update', ['id' => 999]), $request);
+        $response = $this->actingAs($admin)->putJson(route('service.update', ['id' => 999]), $request);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
@@ -61,7 +62,7 @@ class UpdateTest extends TestCase
 
         $request = [];
 
-        $response = $this->actingAs($admin)->put(route('service.update', ['id' => fake()->uuid()]), $request, APIHelper::getHeaders());
+        $response = $this->actingAs($admin)->putJson(route('service.update', ['id' => fake()->uuid()]), $request);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 

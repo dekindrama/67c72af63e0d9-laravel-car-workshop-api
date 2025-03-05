@@ -22,10 +22,10 @@ class LogoutTest extends TestCase
 
         $response = $this->actingAs($admin)->post(route('auth.logout'));
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-        ]);
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+            ]);
     }
 
     function test_get_logged_user_unauthenticated() {

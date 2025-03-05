@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Feature\Admin\ServiceController;
+namespace Tests\Feature\Admin\Service\ServiceController;
 
 use App\Enums\RoleEnum;
 use App\Helpers\APIHelper;
+use App\Models\Service;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,15 +26,16 @@ class StoreTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->post(route('service.store'), $request);
+        $response = $this->actingAs($admin)->postJson(route('service.store'), $request);
 
-        $response->assertStatus(Response::HTTP_CREATED);
-        $response->assertJsonStructure([
-            'message',
-            'data' => [
-                'service',
-            ],
-        ]);
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'service',
+                ],
+            ]);
+        $this->assertDatabaseHas(Service::class, $request);
     }
 
     public function test_store_bad_request(): void
@@ -43,7 +45,7 @@ class StoreTest extends TestCase
 
         $request = [];
 
-        $response = $this->actingAs($admin)->post(route('service.store'), $request, APIHelper::getHeaders());
+        $response = $this->actingAs($admin)->postJson(route('service.store'), $request);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 

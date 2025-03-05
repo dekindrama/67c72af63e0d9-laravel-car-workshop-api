@@ -22,13 +22,13 @@ class LoggedUserTest extends TestCase
 
         $response = $this->actingAs($admin)->get(route('auth.logged-user'));
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-            'data' => [
-                'user',
-            ],
-        ]);
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'user',
+                ],
+            ]);
     }
 
     function test_get_logged_user_unauthenticated() {

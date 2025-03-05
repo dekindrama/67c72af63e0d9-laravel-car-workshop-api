@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\ServiceController;
+namespace Tests\Feature\Admin\Service\ServiceController;
 
 use App\Enums\RoleEnum;
 use App\Models\Service;
@@ -26,12 +26,13 @@ class DestroyTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->delete(route('service.destroy', ['id' => $service->id]), $request);
+        $response = $this->actingAs($admin)->deleteJson(route('service.destroy', ['id' => $service->id]), $request);
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([
-            'message',
-        ]);
+        $response->assertStatus(Response::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+            ]);
+        $this->assertDatabaseMissing(Service::class, $request);
     }
 
     public function test_update_service_not_found(): void
@@ -44,7 +45,7 @@ class DestroyTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->delete(route('service.destroy', ['id' => 999]), $request);
+        $response = $this->actingAs($admin)->deleteJson(route('service.destroy', ['id' => 999]), $request);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
