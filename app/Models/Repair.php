@@ -29,6 +29,10 @@ class Repair extends Model
         return $this->hasOne(RepairCar::class, 'repair_id', 'id');
     }
 
+    function invoice() : HasOne {
+        return $this->hasOne(RepairInvoice::class, 'repair_id', 'id');
+    }
+
     function jobs() : HasMany {
         return $this->hasMany(RepairJob::class, 'repair_id', 'id');
     }

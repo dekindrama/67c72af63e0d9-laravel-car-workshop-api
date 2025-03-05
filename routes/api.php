@@ -29,6 +29,11 @@ Route::middleware(['auth:sanctum', AdminOnlyMiddleware::class])->prefix('/admin'
     Route::post('/users', [Admin\User\UserController::class, 'store'])->name('user.store');
     Route::delete('/users/{id}', [Admin\User\UserController::class, 'destroy'])->name('user.destroy');
 
+    //* repair invoice
+    Route::get('/repairs/{id}/invoices', [Admin\Repair\RepairInvoiceController::class, 'show'])->name('repair.repair-invoice.show');
+    Route::post('/repairs/{id}/invoices/send', [Admin\Repair\RepairInvoiceController::class, 'send'])->name('repair.repair-invoice.send');
+    Route::post('/repairs/{id}/invoices', [Admin\Repair\RepairInvoiceController::class, 'store'])->name('repair.repair-invoice.store');
+
     //* repair job
     Route::get('/repairs/{id}/jobs', [Admin\Repair\RepairJobController::class, 'index'])->name('repair.repair-job.index');
     Route::post('/repairs/{id}/jobs', [Admin\Repair\RepairJobController::class, 'store'])->name('repair.repair-job.store');

@@ -7,8 +7,6 @@ use App\Http\Requests\Admin\Service\ServiceStoreRequest;
 use App\Http\Requests\Admin\Service\ServiceUpdateRequest;
 use App\Models\Service;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 class ServiceController extends Controller
