@@ -1,4 +1,8 @@
-## [0.7.0] - 05-05-2025
+## [0.7.1] - 06-05-2025
+
+-   update readme
+
+## [0.7.0] - 06-05-2025
 
 -   add feature admin:
     -   create invoice repair and send email invoice

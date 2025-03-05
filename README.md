@@ -6,16 +6,6 @@
 
 ---
 
-### **project features**
-
----
-
-admin can :
-
-mechanic, can :
-
-customer, can :
-
 ### **installation**
 
 ---
@@ -64,6 +54,12 @@ MAIL_FROM_ADDRESS=null
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
+on separated terminal, and run queue command since it has relation with email notification features.
+
+```
+php artisan queue:work
+```
+
 generate new application key
 
 ```
@@ -94,6 +90,14 @@ Entity Relationship Diagram
 ![image](/documentations/ERD-ERD.jpg)
 
 ---
+
+Features
+![image](/documentations/ERD-features.jpg)
+
+---
+
+Database structure
+![image](/documentations/ERD-konseptual-database.jpg)
 
 ---
 
