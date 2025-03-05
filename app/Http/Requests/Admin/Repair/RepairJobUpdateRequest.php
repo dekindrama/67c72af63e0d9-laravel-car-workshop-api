@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\User;
+namespace App\Http\Requests\Admin\Repair;
 
-use App\Enums\RoleEnum;
+use App\Enums\RepairJobStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserStoreRequest extends FormRequest
+class RepairJobUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'unique:users,email'],
-            'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'string', Rule::in(RoleEnum::get())],
+            'service_id' => ['required', 'integer', 'exists:services,id'],
+            'mechanic_id' => ['nullable', 'integer', 'exists:users,id'],
+            'status' => ['required', 'string', Rule::in(RepairJobStatusEnum::get())],
         ];
     }
 }

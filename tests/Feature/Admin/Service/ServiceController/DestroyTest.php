@@ -15,7 +15,7 @@ class DestroyTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function test_update(): void
+    public function test_destroy(): void
     {
         $this->seed(UserSeeder::class);
         $admin = User::where('role', RoleEnum::ADMIN)->first();
@@ -35,7 +35,7 @@ class DestroyTest extends TestCase
         $this->assertDatabaseMissing(Service::class, $request);
     }
 
-    public function test_update_service_not_found(): void
+    public function test_destroy_service_not_found(): void
     {
         $this->seed(UserSeeder::class);
         $admin = User::where('role', RoleEnum::ADMIN)->first();

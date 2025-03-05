@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Repair\RepairController;
+use App\Http\Controllers\Admin\Repair\RepairJobController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Auth\AuthController;
@@ -26,6 +28,18 @@ Route::middleware(['auth:sanctum', AdminOnlyMiddleware::class])->prefix('/admin'
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::post('/users', [UserController::class, 'store'])->name('user.store');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    //* repair job
+    Route::get('/repairs/{id}/jobs', [RepairJobController::class, 'index'])->name('repair.repair-job.index');
+    Route::post('/repairs/{id}/jobs', [RepairJobController::class, 'store'])->name('repair.repair-job.store');
+    Route::put('/repairs/{id}/jobs/{repair_job_id}', [RepairJobController::class, 'update'])->name('repair.repair-job.update');
+    Route::delete('/repairs/{id}/jobs/{repair_job_id}', [RepairJobController::class, 'destroy'])->name('repair.repair-job.destroy');
+
+    //* repair
+    Route::get('/repairs', [RepairController::class, 'index'])->name('repair.index');
+    Route::post('/repairs', [RepairController::class, 'store'])->name('repair.store');
+    Route::put('/repairs/{id}', [RepairController::class, 'update'])->name('repair.update');
+    Route::delete('/repairs/{id}', [RepairController::class, 'destroy'])->name('repair.destroy');
 });
 
 //* mechanic

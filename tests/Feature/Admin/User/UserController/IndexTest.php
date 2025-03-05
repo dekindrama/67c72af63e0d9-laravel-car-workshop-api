@@ -14,13 +14,13 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function test_index_returns_users(): void
+    public function test_get_index(): void
     {
         $admin = User::factory()->create([
             'role' => RoleEnum::ADMIN,
         ]);
 
-        $response = $this->actingAs($admin)->get(route('user.index'));
+        $response = $this->actingAs($admin)->getJson(route('user.index'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -39,7 +39,7 @@ class IndexTest extends TestCase
             'role' => RoleEnum::MECHANIC,
         ]);
 
-        $response = $this->actingAs($mechanic)->get(route('user.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('user.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

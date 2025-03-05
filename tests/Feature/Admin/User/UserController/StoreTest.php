@@ -13,7 +13,7 @@ class StoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_store_creates_user(): void
+    public function test_store(): void
     {
         $admin = User::factory()->create([
             'role' => RoleEnum::ADMIN,

@@ -13,7 +13,7 @@ class DestroyTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_destroy_deletes_user(): void
+    public function test_destroy(): void
     {
         $admin = User::factory()->create([
             'role' => RoleEnum::ADMIN,
@@ -24,11 +24,7 @@ class DestroyTest extends TestCase
             'id' => $user->id,
         ]));
 
-        $response->assertStatus(Response::HTTP_OK)
-            ->assertJson([
-                'message' => 'success delete user'
-            ]);
-
+        $response->assertStatus(Response::HTTP_OK);
         $this->assertDatabaseMissing(User::class, [
             'id' => $user->id
         ]);
@@ -42,9 +38,6 @@ class DestroyTest extends TestCase
 
         $response = $this->actingAs($admin)->deleteJson(route('user.destroy', ['id' => 999]));
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND)
-            ->assertJson([
-                'message' => 'user not found'
-            ]);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }

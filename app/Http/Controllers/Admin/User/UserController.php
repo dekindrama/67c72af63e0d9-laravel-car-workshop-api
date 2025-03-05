@@ -31,7 +31,7 @@ class UserController extends Controller
         return response()->json([
             'message' => 'success store user',
             'data' => [
-                'user' => $storedUser,
+                'user' => $storedUser->only('id', 'name', 'email', 'role'),
             ],
         ], Response::HTTP_CREATED);
     }

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth\AuthController;
 
 use App\Enums\RoleEnum;
-use App\Helpers\APIHelper;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +19,7 @@ class LoggedUserTest extends TestCase
 
         $admin = User::where('role', RoleEnum::ADMIN)->first();
 
-        $response = $this->actingAs($admin)->get(route('auth.logged-user'));
+        $response = $this->actingAs($admin)->getJson(route('auth.logged-user'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -32,7 +31,7 @@ class LoggedUserTest extends TestCase
     }
 
     function test_get_logged_user_unauthenticated() {
-        $response = $this->get(route('auth.logged-user'), APIHelper::getHeaders());
+        $response = $this->getJson(route('auth.logged-user'));
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }

@@ -33,7 +33,7 @@ class ServiceController extends Controller
         return response()->json([
             'message' => 'success store service',
             'data' => [
-                'service' => $storedService,
+                'service' => $storedService->only('id', 'name', 'price'),
             ],
         ], Response::HTTP_CREATED);
     }
@@ -47,7 +47,7 @@ class ServiceController extends Controller
         return response()->json([
             'message' => 'success update service',
             'data' => [
-                'service' => $service,
+                'service' => $service->only('id', 'name', 'price'),
             ],
         ], Response::HTTP_OK);
     }

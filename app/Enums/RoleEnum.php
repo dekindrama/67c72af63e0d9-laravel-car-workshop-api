@@ -8,7 +8,7 @@ class RoleEnum
     const MECHANIC = "MECHANIC";
     const CAR_OWNER = "CAR_OWNER";
 
-    static function getRoles() : array {
+    static function get() : array {
         return [
             Self::ADMIN,
             Self::MECHANIC,

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth\AuthController;
 
-use App\Helpers\APIHelper;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,7 +16,7 @@ class LoginTest extends TestCase
     {
         $this->seed(UserSeeder::class);
 
-        $response = $this->post(route('auth.login'), [
+        $response = $this->postJson(route('auth.login'), [
             'email' => 'admin@example.com',
             'password' => 'password'
         ]);
@@ -33,7 +32,7 @@ class LoginTest extends TestCase
 
     public function test_login_bad_request(): void
     {
-        $response = $this->post(route('auth.login'), [], APIHelper::getHeaders());
+        $response = $this->postJson(route('auth.login'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }

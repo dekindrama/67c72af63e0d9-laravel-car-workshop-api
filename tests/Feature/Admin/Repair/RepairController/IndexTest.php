@@ -1,11 +1,9 @@
 <?php
 
-namespace Tests\Feature\Admin\Service\ServiceController;
+namespace Tests\Feature\Admin\Repair\RepairController;
 
 use App\Enums\RoleEnum;
-use App\Models\Service;
 use App\Models\User;
-use Database\Seeders\ServiceSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,32 +12,32 @@ use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
 
-    function test_get_index() {
-        $this->seed(UserSeeder::class);
+    public function test_get_index()
+    {
+        $this->seed();
 
         $admin = User::where('role', RoleEnum::ADMIN)->first();
-        $services = Service::factory(5)->create();
 
-        $response = $this->actingAs($admin)->getJson(route('service.index'));
+        $response = $this->actingAs($admin)->getJson(route('repair.index'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'message',
                 'data' => [
-                    'services',
+                    'repairs'
                 ],
-            ])
-            ->assertJsonCount(5, 'data.services');
+            ]);
     }
 
-    function test_get_index_wrong_user_role() {
+    public function test_get_index_wrong_role()
+    {
         $this->seed(UserSeeder::class);
 
         $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
 
-        $response = $this->actingAs($mechanic)->getJson(route('service.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('repair.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
