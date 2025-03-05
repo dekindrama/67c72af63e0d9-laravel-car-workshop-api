@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Admin\Repair;
+namespace App\Http\Resources\Mechanic\Job;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RepairListResource extends JsonResource
+class JobDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,9 @@ class RepairListResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'car' => $this->repair->car->only('number_plate', 'description'),
+            'service' => $this->service->only('id', 'name'),
             'status' => $this->status,
-            'arrived_at' => $this->arrived_at,
-            'owner' => $this->owner->only('id', 'name', 'email'),
-            'car' => $this->car->only('id', 'number_plate', 'description'),
         ];
     }
 }

@@ -32,7 +32,7 @@ class UpdateTest extends TestCase
             'car_description' => 'Blue hatchback'
         ];
 
-        $response = $this->actingAs($admin)->putJson(route('repair.update', $repair->id), $updateData);
+        $response = $this->actingAs($admin)->putJson(route('admin.repair.update', $repair->id), $updateData);
 
         $response->assertStatus(Response::HTTP_OK)
                  ->assertJsonStructure([

@@ -22,7 +22,7 @@ class IndexTest extends TestCase
         $admin = User::where('role', RoleEnum::ADMIN)->first();
         $services = Service::factory(5)->create();
 
-        $response = $this->actingAs($admin)->getJson(route('service.index'));
+        $response = $this->actingAs($admin)->getJson(route('admin.service.index'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -39,7 +39,7 @@ class IndexTest extends TestCase
 
         $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
 
-        $response = $this->actingAs($mechanic)->getJson(route('service.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('admin.service.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

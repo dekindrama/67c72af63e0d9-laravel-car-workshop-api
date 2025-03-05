@@ -21,7 +21,7 @@ class IndexTest extends TestCase
         $admin = User::where('role', RoleEnum::ADMIN)->first();
         $repair = Repair::first();
 
-        $response = $this->actingAs($admin)->getJson(route('repair.repair-job.index', [
+        $response = $this->actingAs($admin)->getJson(route('admin.repair.repair-job.index', [
             'id' => $repair->id,
         ]));
 

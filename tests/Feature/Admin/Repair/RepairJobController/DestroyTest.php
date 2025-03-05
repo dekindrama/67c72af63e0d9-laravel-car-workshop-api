@@ -22,7 +22,7 @@ class DestroyTest extends TestCase
         $repair = Repair::first();
         $job = $repair->jobs->first();
 
-        $response = $this->actingAs($admin)->deleteJson(route('repair.repair-job.destroy', [
+        $response = $this->actingAs($admin)->deleteJson(route('admin.repair.repair-job.destroy', [
             'id' => $repair->id,
             'repair_job_id' => $job->id,
         ]));

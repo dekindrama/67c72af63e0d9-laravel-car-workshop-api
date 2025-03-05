@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Admin\Repair\RepairController;
+namespace Tests\Feature\Mechanic\Job\JobController;
 
 use App\Enums\RoleEnum;
 use App\Models\User;
@@ -18,15 +18,15 @@ class IndexTest extends TestCase
     {
         $this->seed();
 
-        $admin = User::where('role', RoleEnum::ADMIN)->first();
+        $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
 
-        $response = $this->actingAs($admin)->getJson(route('admin.repair.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('mechanic.job.index'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'message',
                 'data' => [
-                    'repairs'
+                    'jobs'
                 ],
             ]);
     }
@@ -35,9 +35,9 @@ class IndexTest extends TestCase
     {
         $this->seed(UserSeeder::class);
 
-        $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
+        $admin = User::where('role', RoleEnum::ADMIN)->first();
 
-        $response = $this->actingAs($mechanic)->getJson(route('admin.repair.index'));
+        $response = $this->actingAs($admin)->getJson(route('mechanic.job.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

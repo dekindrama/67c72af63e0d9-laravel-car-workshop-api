@@ -19,11 +19,7 @@ class RepairSeeder extends Seeder
      */
     public function run(): void
     {
-        $carOwner = User::factory()->create([
-            'name' => 'owner 2',
-            'email' => 'owner2@example.com',
-            'role' => RoleEnum::CAR_OWNER,
-        ]);
+        $carOwner = User::where('role', RoleEnum::CAR_OWNER)->first();
         $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
         $service = Service::take(2)->get();
 
@@ -40,6 +36,12 @@ class RepairSeeder extends Seeder
             'repair_id' => $repair->id,
             'mechanic_id' => $mechanic->id,
             'status' => RepairJobStatusEnum::COMPLETED,
+        ]);
+        $job = RepairJob::factory()->create([
+            'service_id' => $service[1]->id,
+            'repair_id' => $repair->id,
+            'mechanic_id' => $mechanic->id,
+            'status' => RepairJobStatusEnum::PROGRESS,
         ]);
         $job = RepairJob::factory()->create([
             'service_id' => $service[1]->id,

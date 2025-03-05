@@ -1,3 +1,10 @@
+## [0.5.0] - 05-05-2025
+
+-   add feature mechanic: RU repair jobs
+-   add feature car owner: R repairs
+-   add feature admin: show repair detail
+-   refactoring api routes
+
 ## [0.4.0] - 05-05-2025
 
 -   add feature admin: CRUD repairs, CRUD repair jobs

@@ -35,7 +35,7 @@ class StoreTest extends TestCase
             'status' => RepairJobStatusEnum::PROGRESS,
         ];
 
-        $response = $this->actingAs($admin)->postJson(route('repair.repair-job.store', [
+        $response = $this->actingAs($admin)->postJson(route('admin.repair.repair-job.store', [
             'id' => $repair->id,
         ]), $request);
 

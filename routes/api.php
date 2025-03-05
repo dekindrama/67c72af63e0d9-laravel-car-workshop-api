@@ -1,47 +1,58 @@
 <?php
 
-use App\Http\Controllers\Admin\Repair\RepairController;
-use App\Http\Controllers\Admin\Repair\RepairJobController;
-use App\Http\Controllers\Admin\Service\ServiceController;
-use App\Http\Controllers\Admin\User\UserController;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CarOwner;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Mechanic;
+use App\Http\Controllers\Auth;
 use App\Http\Middleware\AdminOnlyMiddleware;
-use Illuminate\Http\Request;
+use App\Http\Middleware\CarOwnerOnlyMiddleware;
+use App\Http\Middleware\MechanicOnlyMiddleware;
 use Illuminate\Support\Facades\Route;
 
 //* basic auth
-Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/login', [Auth\AuthController::class, 'login'])->name('auth.login');
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/logged-user', [AuthController::class, 'loggedUser'])->name('auth.logged-user');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('/logged-user', [Auth\AuthController::class, 'loggedUser'])->name('auth.logged-user');
+    Route::post('/logout', [Auth\AuthController::class, 'logout'])->name('auth.logout');
 });
 
 //* admin
-Route::middleware(['auth:sanctum', AdminOnlyMiddleware::class])->prefix('/admin')->group(function() {
+Route::middleware(['auth:sanctum', AdminOnlyMiddleware::class])->prefix('/admin')->name('admin.')->group(function() {
     //* service
-    Route::get('/services', [ServiceController::class, 'index'])->name('service.index');
-    Route::post('/services', [ServiceController::class, 'store'])->name('service.store');
-    Route::put('/services/{id}', [ServiceController::class, 'update'])->name('service.update');
-    Route::delete('/services/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+    Route::get('/services', [Admin\Service\ServiceController::class, 'index'])->name('service.index');
+    Route::post('/services', [Admin\Service\ServiceController::class, 'store'])->name('service.store');
+    Route::put('/services/{id}', [Admin\Service\ServiceController::class, 'update'])->name('service.update');
+    Route::delete('/services/{id}', [Admin\Service\ServiceController::class, 'destroy'])->name('service.destroy');
 
     //* user
-    Route::get('/users', [UserController::class, 'index'])->name('user.index');
-    Route::post('/users', [UserController::class, 'store'])->name('user.store');
-    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/users', [Admin\User\UserController::class, 'index'])->name('user.index');
+    Route::post('/users', [Admin\User\UserController::class, 'store'])->name('user.store');
+    Route::delete('/users/{id}', [Admin\User\UserController::class, 'destroy'])->name('user.destroy');
 
     //* repair job
-    Route::get('/repairs/{id}/jobs', [RepairJobController::class, 'index'])->name('repair.repair-job.index');
-    Route::post('/repairs/{id}/jobs', [RepairJobController::class, 'store'])->name('repair.repair-job.store');
-    Route::put('/repairs/{id}/jobs/{repair_job_id}', [RepairJobController::class, 'update'])->name('repair.repair-job.update');
-    Route::delete('/repairs/{id}/jobs/{repair_job_id}', [RepairJobController::class, 'destroy'])->name('repair.repair-job.destroy');
+    Route::get('/repairs/{id}/jobs', [Admin\Repair\RepairJobController::class, 'index'])->name('repair.repair-job.index');
+    Route::post('/repairs/{id}/jobs', [Admin\Repair\RepairJobController::class, 'store'])->name('repair.repair-job.store');
+    Route::put('/repairs/{id}/jobs/{repair_job_id}', [Admin\Repair\RepairJobController::class, 'update'])->name('repair.repair-job.update');
+    Route::delete('/repairs/{id}/jobs/{repair_job_id}', [Admin\Repair\RepairJobController::class, 'destroy'])->name('repair.repair-job.destroy');
 
     //* repair
-    Route::get('/repairs', [RepairController::class, 'index'])->name('repair.index');
-    Route::post('/repairs', [RepairController::class, 'store'])->name('repair.store');
-    Route::put('/repairs/{id}', [RepairController::class, 'update'])->name('repair.update');
-    Route::delete('/repairs/{id}', [RepairController::class, 'destroy'])->name('repair.destroy');
+    Route::get('/repairs', [Admin\Repair\RepairController::class, 'index'])->name('repair.index');
+    Route::get('/repairs/{id}', [Admin\Repair\RepairController::class, 'show'])->name('repair.show');
+    Route::post('/repairs', [Admin\Repair\RepairController::class, 'store'])->name('repair.store');
+    Route::put('/repairs/{id}', [Admin\Repair\RepairController::class, 'update'])->name('repair.update');
+    Route::delete('/repairs/{id}', [Admin\Repair\RepairController::class, 'destroy'])->name('repair.destroy');
 });
 
 //* mechanic
+Route::middleware(['auth:sanctum', MechanicOnlyMiddleware::class])->prefix('/mechanic')->name('mechanic.')->group(function() {
+    Route::get('/jobs', [Mechanic\Job\JobController::class, 'index'])->name('job.index');
+    Route::get('/jobs/{id}', [Mechanic\Job\JobController::class, 'show'])->name('job.show');
+    Route::put('/jobs/{id}', [Mechanic\Job\JobController::class, 'update'])->name('job.update');
+});
 
 //* car-owner
+Route::middleware(['auth:sanctum', CarOwnerOnlyMiddleware::class])->prefix('/car-owner')->name('car-owner.')->group(function() {
+    //* repair
+    Route::get('/repairs', [CarOwner\Repair\RepairController::class, 'index'])->name('repair.index');
+    Route::get('/repairs/{id}', [CarOwner\Repair\RepairController::class, 'show'])->name('repair.show');
+});

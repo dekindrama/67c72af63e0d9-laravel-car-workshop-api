@@ -26,7 +26,7 @@ class DestroyTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->deleteJson(route('service.destroy', ['id' => $service->id]), $request);
+        $response = $this->actingAs($admin)->deleteJson(route('admin.service.destroy', ['id' => $service->id]), $request);
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -45,7 +45,7 @@ class DestroyTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->deleteJson(route('service.destroy', ['id' => 999]), $request);
+        $response = $this->actingAs($admin)->deleteJson(route('admin.service.destroy', ['id' => 999]), $request);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 

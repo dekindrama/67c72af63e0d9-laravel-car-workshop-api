@@ -30,7 +30,7 @@ class StoreTest extends TestCase
             'car_description' => 'Red sedan, minor scratches'
         ];
 
-        $response = $this->actingAs($admin)->postJson(route('repair.store'), $requestData);
+        $response = $this->actingAs($admin)->postJson(route('admin.repair.store'), $requestData);
 
         $response->assertStatus(Response::HTTP_CREATED)
                  ->assertJsonStructure([

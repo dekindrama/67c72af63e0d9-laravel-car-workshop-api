@@ -20,7 +20,7 @@ class IndexTest extends TestCase
             'role' => RoleEnum::ADMIN,
         ]);
 
-        $response = $this->actingAs($admin)->getJson(route('user.index'));
+        $response = $this->actingAs($admin)->getJson(route('admin.user.index'));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -39,7 +39,7 @@ class IndexTest extends TestCase
             'role' => RoleEnum::MECHANIC,
         ]);
 
-        $response = $this->actingAs($mechanic)->getJson(route('user.index'));
+        $response = $this->actingAs($mechanic)->getJson(route('admin.user.index'));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }

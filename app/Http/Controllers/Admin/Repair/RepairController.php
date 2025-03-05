@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Repair;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Repair\RepairStoreRequest;
 use App\Http\Requests\Admin\Repair\RepairUpdateRequest;
+use App\Http\Resources\Admin\Repair\RepairDetailResource;
 use App\Http\Resources\Admin\Repair\RepairListResource;
 use App\Models\Repair;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,7 @@ class RepairController extends Controller
 {
     function index() : JsonResponse {
         $repairs = Repair::query()
-            ->with('owner', 'car', 'jobs', 'jobs.service')
+            ->with('owner', 'car')
             ->latest()
             ->get();
 
@@ -23,6 +24,21 @@ class RepairController extends Controller
             'message' => 'success get repairs',
             'data' => [
                 'repairs' => RepairListResource::collection($repairs),
+            ],
+        ], Response::HTTP_OK);
+    }
+
+    function show(int $id) : JsonResponse {
+        $repair = Repair::query()
+            ->with('owner', 'car', 'jobs', 'jobs.mechanic', 'jobs.service')
+            ->where('id', $id)
+            ->first();
+        abort_if($repair == null, Response::HTTP_NOT_FOUND, 'repair not found');
+
+        return response()->json([
+            'message' => 'success get repair',
+            'data' => [
+                'repair' => RepairDetailResource::make($repair),
             ],
         ], Response::HTTP_OK);
     }

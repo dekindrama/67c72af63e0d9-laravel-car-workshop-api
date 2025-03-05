@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Admin\Repair;
+namespace App\Http\Resources\CarOwner\Repair;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,7 +18,6 @@ class RepairListResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status,
             'arrived_at' => $this->arrived_at,
-            'owner' => $this->owner->only('id', 'name', 'email'),
             'car' => $this->car->only('id', 'number_plate', 'description'),
         ];
     }

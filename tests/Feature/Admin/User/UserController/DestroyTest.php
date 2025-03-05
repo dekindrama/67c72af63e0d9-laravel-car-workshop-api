@@ -20,7 +20,7 @@ class DestroyTest extends TestCase
         ]);
         $user = User::factory()->create();
 
-        $response = $this->actingAs($admin)->deleteJson(route('user.destroy', [
+        $response = $this->actingAs($admin)->deleteJson(route('admin.user.destroy', [
             'id' => $user->id,
         ]));
 
@@ -36,7 +36,7 @@ class DestroyTest extends TestCase
             'role' => RoleEnum::ADMIN,
         ]);
 
-        $response = $this->actingAs($admin)->deleteJson(route('user.destroy', ['id' => 999]));
+        $response = $this->actingAs($admin)->deleteJson(route('admin.user.destroy', ['id' => 999]));
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }

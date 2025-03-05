@@ -25,7 +25,7 @@ class StoreTest extends TestCase
             'price' => 120,
         ];
 
-        $response = $this->actingAs($admin)->postJson(route('service.store'), $request);
+        $response = $this->actingAs($admin)->postJson(route('admin.service.store'), $request);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
@@ -44,7 +44,7 @@ class StoreTest extends TestCase
 
         $request = [];
 
-        $response = $this->actingAs($admin)->postJson(route('service.store'), $request);
+        $response = $this->actingAs($admin)->postJson(route('admin.service.store'), $request);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 

@@ -30,7 +30,7 @@ class UpdateTest extends TestCase
             'status' => RepairJobStatusEnum::COMPLETED,
         ];
 
-        $response = $this->actingAs($admin)->putJson(route('repair.repair-job.update', [
+        $response = $this->actingAs($admin)->putJson(route('admin.repair.repair-job.update', [
             'id' => $repair->id,
             'repair_job_id' => $job->id,
         ]), $request);

@@ -17,14 +17,7 @@ class RepairOnlySeeder extends Seeder
      */
     public function run(): void
     {
-        $carOwner = User::factory()->create([
-            'name' => 'owner 2',
-            'email' => 'owner2@example.com',
-            'role' => RoleEnum::CAR_OWNER,
-        ]);
-        $mechanic = User::where('role', RoleEnum::MECHANIC)->first();
-        $service = Service::take(2)->get();
-
+        $carOwner = User::where('role', RoleEnum::CAR_OWNER)->first();
         $repair = Repair::factory()->create([
             'owner_id' => $carOwner->id,
         ]);

@@ -25,7 +25,7 @@ class StoreTest extends TestCase
             'role' => RoleEnum::CAR_OWNER,
         ];
 
-        $response = $this->actingAs($admin)->postJson(route('user.store'), $userData);
+        $response = $this->actingAs($admin)->postJson(route('admin.user.store'), $userData);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
