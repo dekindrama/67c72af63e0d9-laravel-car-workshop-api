@@ -10,7 +10,7 @@ use App\Http\Middleware\CarOwnerOnlyMiddleware;
 use App\Http\Middleware\MechanicOnlyMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [IndexController::class, 'index']);
+Route::get('/', IndexController::class);
 
 //* basic auth
 Route::post('/login', [Auth\AuthController::class, 'login'])->name('auth.login');

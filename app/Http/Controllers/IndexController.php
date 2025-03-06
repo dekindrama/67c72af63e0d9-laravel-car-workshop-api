@@ -8,7 +8,11 @@ use Illuminate\Http\Response;
 
 class IndexController extends Controller
 {
-    function index() : JsonResponse {
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request) : JsonResponse
+    {
         return response()->json([
             'message' => 'success hit car workshop api',
         ], Response::HTTP_OK);
