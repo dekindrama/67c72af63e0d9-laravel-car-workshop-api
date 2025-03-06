@@ -130,3 +130,11 @@ php artisan test
 ```
 
 ---
+
+### CMS Frontend
+
+for frontend CMS. can be accessable through this github link.
+
+https://github.com/dekindrama/67c72af63e0d9-laravel-car-workshop-frontend
+
+NOTE: CMS Frontend still not finished

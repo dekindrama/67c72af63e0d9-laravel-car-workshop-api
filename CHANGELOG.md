@@ -1,3 +1,7 @@
+## [0.8.1] - 06-05-2025
+
+-   update readme
+
 ## [0.8.0] - 06-05-2025
 
 -   add feature admin: show service
