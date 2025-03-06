@@ -4,10 +4,13 @@ use App\Http\Controllers\CarOwner;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Mechanic;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\IndexController;
 use App\Http\Middleware\AdminOnlyMiddleware;
 use App\Http\Middleware\CarOwnerOnlyMiddleware;
 use App\Http\Middleware\MechanicOnlyMiddleware;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', [IndexController::class, 'index']);
 
 //* basic auth
 Route::post('/login', [Auth\AuthController::class, 'login'])->name('auth.login');
