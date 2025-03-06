@@ -114,7 +114,7 @@ for manually testing the api, you can use [Postman](https://www.postman.com/down
 here is the link of collection that i used to manual testing the api. you can open it on your browser and import it to your Postman App
 
 ```
-[postman link]
+https://documenter.getpostman.com/view/25688638/2sAYdmjnHo
 ```
 
 ---
