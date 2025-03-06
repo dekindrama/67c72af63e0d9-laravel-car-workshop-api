@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function() {
 Route::middleware(['auth:sanctum', AdminOnlyMiddleware::class])->prefix('/admin')->name('admin.')->group(function() {
     //* service
     Route::get('/services', [Admin\Service\ServiceController::class, 'index'])->name('service.index');
+    Route::get('/services/{id}', [Admin\Service\ServiceController::class, 'show'])->name('service.show');
     Route::post('/services', [Admin\Service\ServiceController::class, 'store'])->name('service.store');
     Route::put('/services/{id}', [Admin\Service\ServiceController::class, 'update'])->name('service.update');
     Route::delete('/services/{id}', [Admin\Service\ServiceController::class, 'destroy'])->name('service.destroy');

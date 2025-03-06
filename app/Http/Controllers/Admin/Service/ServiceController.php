@@ -25,6 +25,20 @@ class ServiceController extends Controller
         ], Response::HTTP_OK);
     }
 
+    function show(int $id) : JsonResponse {
+        $service = Service::query()
+            ->select('id', 'name', 'price')
+            ->where('id', $id)
+            ->first();
+
+        return response()->json([
+            'message' => 'success get services',
+            'data' => [
+                'service' => $service->only('id', 'name', 'price'),
+            ],
+        ], Response::HTTP_OK);
+    }
+
     function store(ServiceStoreRequest $request) : JsonResponse {
         $storedService = Service::create($request->validated());
 

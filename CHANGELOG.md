@@ -1,3 +1,7 @@
+## [0.8.0] - 06-05-2025
+
+-   add feature admin: show service
+
 ## [0.7.4] - 06-05-2025
 
 -   setup index
