@@ -1,3 +1,7 @@
+## [0.7.2] - 06-05-2025
+
+-   test RapairInvoiceHelper
+
 ## [0.7.1] - 06-05-2025
 
 -   update readme
